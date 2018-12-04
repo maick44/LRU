@@ -1,0 +1,522 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+////////////////////////////////////////////////
+//  CEFET/RJ UnED Petrópolis                  //
+//  Bernardo Costa                            //
+//  Arquitetura e Organização de Computadores //
+//  Acesso a Página							  //					
+//  Professor Pedro 		                  //
+////////////////////////////////////////////////
+
+/*
+1. acesse apenas paginas aleatorias.
+2. acesse 3 paginas aleatorias e acesse a pagina 5.
+3. acesse as paginas 1, 7 e 3 depois acesse uma pagina aleatoria.
+4. acesse sequencialmente todas as paginas.
+5. acesse sequencialmente as paginas {0, 1, 2} e depois tres paginas aleatorias.
+6. acesse uma pagina aleatoria e uma pagina par em seguida.
+7. acesse uma pagina aleatoria 4 vezes depois acesse a sequencialente as paginas {0, 1, 2}.
+8. acesse uma pagina aleatoria 3 vezes, outra aleatoria 5 vezes depois acesse sequencialente {0, 1, 2}
+*/
+
+int ram[4], hit = 0, miss = 0;
+
+void limpaRam();
+void insereRam(int num);
+int testaRam(int num);
+void resultado();
+void um();
+void dois();
+void tres();
+void quatro();
+void cinco();
+void seis();
+void sete();
+void oito();
+
+int main(){
+
+	printf("\n\t\tLRU\n\n");
+	limpaRam();
+	um();
+	dois();
+	tres();
+	quatro();
+	cinco();
+	seis();
+	sete();
+	oito();
+
+	printf("\n");
+}
+
+void limpaRam(){
+
+	ram[0] = -1;
+	ram[1] = -1;
+	ram[2] = -1;
+	ram[3] = -1;
+}
+void insereRam(int num){
+		int i;
+		for(i = 3;i>0;i--){
+			ram[i] = ram[i-1];		
+		}	
+		ram[0] = num;
+	
+}
+
+int testaRam(int num){
+		int i, j;
+		for(i = 0;i<4;i++){
+			if(ram[i] == num){
+				
+				for(j = i-1;j>=0;j--){
+					ram[j+1] = ram[j];
+				}			
+				ram[0] = num;
+				return 1;
+			} 		
+		}
+		return 0;	
+	
+}
+
+void resultado(){
+	printf("\n-----------------------------");
+	printf("\n|  Taxa de acerto = %.4f  |\n", ((float)hit/((float)hit+(float)miss)));
+	printf("-----------------------------\n");
+	limpaRam();
+	hit = 0;
+	miss = 0;
+}
+void um(){
+	int i, aleatorio;
+   srand( (unsigned)time(NULL) );
+   for(i=0 ; i < 10000 ; i++){
+         aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+				
+			}
+	}
+	printf("\nTeste 1: ");
+	resultado();
+}
+
+void dois(){
+	int i, aleatorio;
+   srand( (unsigned)time(NULL) );
+   for(i=0 ; i < 2500 ; i++){
+   			//printf("\n%d %d %d %d \n", ram[0], ram[1], ram[2], ram[3]);
+         aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);
+				miss++;					
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);
+				miss++;					
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);
+				miss++;					
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = 5;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);
+				miss++;					
+			}
+			else{
+				hit++;
+				
+			}
+	}
+	printf("\nTeste 2: ");
+	resultado();
+
+}
+void tres(){
+
+	int i, aleatorio;
+   srand( (unsigned)time(NULL) );
+   for(i=0 ; i < 2500 ; i++){
+         
+			
+
+			aleatorio = 1;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = 7;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = 3;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+				
+	}
+	printf("\nTeste 3: ");
+	resultado();
+
+}
+
+void quatro(){
+	int i, aleatorio;
+ 	
+   for(i=0 ; i < 10000 ; i++){
+
+         aleatorio = i%8;
+		
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);
+				miss++;					
+			}
+			else{
+				hit++;
+				
+				
+			}
+	}
+	printf("\nTeste 4: ");
+	resultado();
+
+}
+
+void cinco(){
+
+	int i, aleatorio;
+   srand( (unsigned)time(NULL) );
+   for(i=0 ; i < 1667; i++){
+         
+			
+			aleatorio = 0;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = 1;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = 2;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+				
+	}
+	printf("\nTeste 5: ");
+	resultado();
+
+}
+
+void seis(){
+	int i, aleatorio;
+   srand( (unsigned)time(NULL) );
+   for(i=0 ; i < 5000 ; i++){
+         
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);
+				miss++;					
+			}
+			else{
+				hit++;
+			}
+
+			aleatorio = (i+2)%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);
+				miss++;					
+			}
+			else{
+				hit++;
+			}
+				
+	}
+	printf("\nTeste 6: ");
+	resultado();
+}
+
+void sete(){
+	int i, aleatorio;
+   srand( (unsigned)time(NULL) );
+   for(i=0 ; i < 1429; i++){
+         
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			aleatorio = 0;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = 1;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = 2;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			
+				
+	}
+	printf("\nTeste 7: ");
+	resultado();
+
+}
+
+void oito(){
+	int i, aleatorio;
+   srand( (unsigned)time(NULL) );
+   for(i=0 ; i < 909; i++){
+         
+			aleatorio = rand()%8;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			aleatorio = rand()%8;
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;		
+			}
+			else{
+				hit++;
+			}
+			aleatorio = 0;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = 1;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			aleatorio = 2;
+			
+			if(testaRam(aleatorio) == 0){
+				insereRam(aleatorio);	
+				miss++;				
+			}
+			else{
+				hit++;
+				
+			}
+			
+				
+	}
+	printf("\nTeste 8: ");
+	resultado();
+
+}
+
+
